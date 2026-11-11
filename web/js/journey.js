@@ -15,7 +15,7 @@
   function zh() { return A.S.lang === 'zh'; }
   function L(o) { return o ? (zh() ? o.zh : o.en) : ''; }
   function read() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(J)); } catch (e) { } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(J)); } catch (e) { } if (window.BDJCloud && window.BDJCloud.changed) window.BDJCloud.changed(); }
 
   var J = read();
   var forced = /[?&#]onboarding\b/.test(location.search + location.hash);
@@ -171,6 +171,7 @@
     google: 'https://accounts.google.com/gsi/client',
     apple: 'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
   };
+  function cloud(m) { return !!(window.BDJCloud && window.BDJCloud.enabled(m)); }
   function errText(e) { return e && (e.message || e.error || e.type) ? String(e.message || e.error || e.type) : String(e); }
   var Auth = {
     preload: function () {
@@ -178,12 +179,14 @@
     },
     ready: function (m) {
       if (!secure) return false;
-      if (m === 'google') return !!AUTH.googleClientId;
+      if (m === 'google') return !!AUTH.googleClientId || cloud('google');
       if (m === 'apple') return !!(AUTH.apple && AUTH.apple.clientId && AUTH.apple.redirectURI);
-      if (m === 'phone') return !!AUTH.firebase;
+      if (m === 'phone') return !!AUTH.firebase || cloud('phone');
       return false;
     },
     google: function () {
+      // Supabase Google provider on: full redirect sign-in (account + synced progress); comes back signed in.
+      if (cloud('google')) return window.BDJCloud.oauth('google', 'goals').then(function () { return new Promise(function () { }); });
       // Called from the click: if the SDK is already loaded the popup opens inside the gesture.
       var go = function () {
         return new Promise(function (res, rej) {
@@ -203,16 +206,25 @@
       return Auth.googleLoaded ? go() : loadScript(SDK.google).then(go);
     },
     apple: function () {
+      var useCloud = cloud('apple'), nc = null;
       var go = function () {
-        window.AppleID.auth.init({ clientId: AUTH.apple.clientId, scope: 'name email', redirectURI: AUTH.apple.redirectURI, usePopup: true });
+        window.AppleID.auth.init({ clientId: AUTH.apple.clientId, scope: 'name email', redirectURI: AUTH.apple.redirectURI, usePopup: true, nonce: nc ? nc.hashed : undefined });
         return window.AppleID.auth.signIn();
       };
-      return (Auth.appleLoaded ? go() : loadScript(SDK.apple).then(go)).then(function (r) {
-        var p = decodeJwt(r.authorization && r.authorization.id_token || ''), n = r.user && r.user.name;
-        return { provider: 'apple', id: 'apple:' + p.sub, email: p.email || (r.user && r.user.email), name: n ? ((n.firstName || '') + ' ' + (n.lastName || '')).trim() : '', verified: true };
+      // Supabase Apple provider on: hand Apple's ID token to Supabase (needs a nonce made before the popup).
+      var start = useCloud ? window.BDJCloud.nonce().then(function (x) { nc = x; }) : Promise.resolve();
+      return start.then(function () { return Auth.appleLoaded ? go() : loadScript(SDK.apple).then(go); }).then(function (r) {
+        var tok = r.authorization && r.authorization.id_token || '', p = decodeJwt(tok), n = r.user && r.user.name;
+        var name = n ? ((n.firstName || '') + ' ' + (n.lastName || '')).trim() : '';
+        if (useCloud) return window.BDJCloud.idToken('apple', tok, nc.raw).then(function (cp) { if (!cp.name && name) cp.name = name; return cp; });
+        return { provider: 'apple', id: 'apple:' + p.sub, email: p.email || (r.user && r.user.email), name: name, verified: true };
       });
     },
     phoneSend: function (number) {
+      if (cloud('phone')) {   // Supabase → Twilio Verify
+        Auth.phoneNumber = number;
+        return window.BDJCloud.phoneStart(number).then(function (r) { if (!r.ok) throw new Error(r.message || r.error); });
+      }
       var v = 'https://www.gstatic.com/firebasejs/10.12.2/';
       return loadScript(v + 'firebase-app-compat.js').then(function () { return loadScript(v + 'firebase-auth-compat.js'); }).then(function () {
         var fb = window.firebase;
@@ -223,6 +235,7 @@
       }).then(function (cr) { Auth.confirmation = cr; }, function (e) { if (Auth.verifier) { try { Auth.verifier.clear(); } catch (x) { } Auth.verifier = null; } throw e; });
     },
     phoneConfirm: function (code) {
+      if (cloud('phone')) return window.BDJCloud.phoneVerify(Auth.phoneNumber, code);
       return Auth.confirmation.confirm(code).then(function (res) {
         return { provider: 'phone', id: 'phone:' + res.user.uid, phone: res.user.phoneNumber, verified: true };
       });
@@ -731,8 +744,8 @@
       h('span', { class: 'me-av lg' + (prof && prof.picture ? ' pic' : '') }, prof && prof.picture ? [h('img', { alt: '', src: prof.picture, referrerpolicy: 'no-referrer' })] : [document.createTextNode(prof && (prof.name || prof.email) ? (prof.name || prof.email)[0].toUpperCase() : '锦')]),
       h('div', {}, [h('h2', { text: prof && prof.name ? prof.name : t('我的进度', 'My progress') }), h('span', { class: 'me-prov', text: prof ? profileLabel(prof) : t('未登录', 'Not signed in') })]),
       h('div', { class: 'me-acts' }, [
-        prof && prof.provider === 'email' && !prof.verified ? h('button', { class: 'onb-btn ghost', text: t('重发验证邮件', 'Resend verification email'), onclick: function (e) { var b = e.currentTarget; b.disabled = true; window.BDJAccount.resend().then(function (j) { b.textContent = j.ok ? t('已发送，请查收', 'Sent; check your inbox') : t('发送失败', 'Couldn’t send'); }, function () { b.disabled = false; }); } }) : null,
-        prof && (prof.verified || prof.provider === 'email') ? h('button', { class: 'onb-btn ghost', text: t('退出登录', 'Sign out'), onclick: function () { track('sign_out', { method: prof.provider }); if (prof.provider === 'email' && window.BDJAccount) window.BDJAccount.signOut(); J.profile = null; save(); if (window.BDJTrack) window.BDJTrack.reset(); renderMe(); renderMeBtn(); } })
+        prof && prof.provider === 'email' && !prof.verified && !prof.cloud ? h('button', { class: 'onb-btn ghost', text: t('重发验证邮件', 'Resend verification email'), onclick: function (e) { var b = e.currentTarget; b.disabled = true; window.BDJAccount.resend().then(function (j) { b.textContent = j.ok ? t('已发送，请查收', 'Sent; check your inbox') : t('发送失败', 'Couldn’t send'); }, function () { b.disabled = false; }); } }) : null,
+        prof && (prof.verified || prof.provider === 'email') ? h('button', { class: 'onb-btn ghost', text: t('退出登录', 'Sign out'), onclick: function () { track('sign_out', { method: prof.provider }); if (prof.cloud && window.BDJCloud && window.BDJCloud.signOut) window.BDJCloud.signOut(); else if (prof.provider === 'email' && window.BDJAccount) window.BDJAccount.signOut(); J.profile = null; save(); if (window.BDJTrack) window.BDJTrack.reset(); renderMe(); renderMeBtn(); } })
           : h('button', { class: 'onb-btn', text: t('登录 / 注册', 'Sign in'), onclick: function () { closeMe(); openOnboarding('welcome'); } })
       ])
     ]);
@@ -812,6 +825,7 @@
   A.onLang.push(function () { renderMeBtn(); if (ob) renderStep(); if (me && !me.hidden) renderMe(); });
   setInterval(renderMeBtn, 30000);
   renderMeBtn(); scheduleReminder();
-  window.BDJJourney = { open: openOnboarding, close: closeOnboarding, openProgress: openMe, state: function () { return J; }, fireReminder: fireReminder, setProfile: function (p) { setProfile(p); if (me && !me.hidden) renderMe(); } };
+  window.BDJJourney = { open: openOnboarding, close: closeOnboarding, openProgress: openMe, state: function () { return J; }, fireReminder: fireReminder, setProfile: function (p) { setProfile(p); if (me && !me.hidden) renderMe(); },
+    applyPlan: function (pl) { ['goals', 'level', 'minutes', 'days', 'weeks', 'reminder', 'startedAt', 'done'].forEach(function (k) { if (pl[k] !== undefined) J[k] = pl[k]; }); save(); scheduleReminder(); renderMeBtn(); if (me && !me.hidden) renderMe(); if (ob && J.done) closeOnboarding(); } };
   if (!J.done || forced) setTimeout(function () { openOnboarding('welcome'); }, 300);
 })();

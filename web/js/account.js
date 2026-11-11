@@ -11,6 +11,7 @@
   var h = A.h, icon = A.icon, t = A.t, S = A.S;
   var track = function (e, p) { if (window.BDJTrack) window.BDJTrack(e, p); };
   var SERVED = /^https?:$/.test(location.protocol);
+  function CL() { return window.BDJCloud && window.BDJCloud.configured ? window.BDJCloud : null; }  // Supabase (js/cloud.js) when set up
   var KEY = 'bdj.account.v1';
   var acct = (function () { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } })();
   function saveAcct() { try { localStorage.setItem(KEY, JSON.stringify(acct)); } catch (e) { } }
@@ -34,7 +35,9 @@
     email: ['邮箱格式不对', 'That email doesn’t look right'], password: ['密码至少 8 位', 'Use at least 8 characters'],
     exists: ['这个邮箱已经注册，请直接登录', 'That email already has an account; sign in instead'],
     credentials: ['邮箱或密码不对', 'Email or password is incorrect'], token: ['链接已失效，请重新申请', 'This link has expired; request a new one'],
-    rate: ['操作太频繁，请稍后再试', 'Too many tries; wait a moment'], net: ['连不上本地助手（sh web/serve.sh）', 'Can’t reach the local helper (sh web/serve.sh)']
+    rate: ['操作太频繁，请稍后再试', 'Too many tries; wait a moment'], net: ['连不上本地助手（sh web/serve.sh）', 'Can’t reach the local helper (sh web/serve.sh)'],
+    unconfirmed: ['这个邮箱还没验证，请先点击验证邮件里的链接', 'Please verify your email first (check your inbox for the link)'],
+    cloudnet: ['连不上账号服务，请检查网络', 'Can’t reach the account service; check your connection']
   };
   function err(code) { var e = ERR[code] || ['出了点问题', 'Something went wrong']; return t(e[0], e[1]); }
   function field(type, ph, auto) { return h('input', { class: 'acc-in', type: type, placeholder: ph, autocomplete: auto, required: true }); }
@@ -55,7 +58,7 @@
     modal.innerHTML = '';
     var card = h('div', { class: 'modal-card acc-card' });
     card.appendChild(h('button', { class: 'icon-btn modal-x', 'aria-label': t('关闭', 'Close'), onclick: close }, [icon('i-close')]));
-    if (!SERVED) {
+    if (!SERVED && !CL()) {
       card.appendChild(h('h2', { text: t('邮箱账号', 'Email account') }));
       card.appendChild(h('p', { class: 'acc-msg', text: t('邮箱注册需要本地助手：运行 sh web/serve.sh，再打开 http://localhost:8765/web/baduanjin-v2.html。', 'Email accounts need the local helper: run sh web/serve.sh, then open http://localhost:8765/web/baduanjin-v2.html.') }));
       modal.appendChild(card); return;
@@ -79,6 +82,23 @@
       if (view === 'signin') form.appendChild(h('button', { type: 'button', class: 'acc-link', text: t('忘记密码？', 'Forgot password?'), onclick: function () { view = 'forgot'; render(); } }));
       form.onsubmit = function (e) {
         e.preventDefault(); msg.textContent = ''; busy(true);
+        if (CL()) {
+          var signup = view === 'signup';
+          (signup ? CL().signUp(email.value.trim(), pw.value, name && name.value.trim(), S.lang) : CL().signIn(email.value.trim(), pw.value)).then(function (r) {
+            busy(false);
+            if (!r.ok) {
+              msg.textContent = err(r.error === 'net' ? 'cloudnet' : r.error === 'other' ? null : r.error) + (r.error === 'other' && r.message ? ' (' + r.message + ')' : '');
+              if (r.error === 'unconfirmed') msg.appendChild(h('button', { type: 'button', class: 'acc-link', text: t(' 重发验证邮件', ' Resend the email'), onclick: function () { CL().resend(email.value.trim()); msg.textContent = t('已重新发送。', 'Sent again.'); } }));
+              return;
+            }
+            track(signup ? 'account_signup' : 'account_signin', { backend: 'supabase' });
+            if (signup && r.needsConfirm) { view = 'check'; acctEmail = email.value.trim(); emailSent = true; render(); return; }
+            var prof = CL().toProfile(r.data.user);
+            if (window.BDJJourney) window.BDJJourney.setProfile(prof);
+            close(); if (onDone) onDone(prof);
+          });
+          return;
+        }
         var body = { email: email.value, password: pw.value, lang: S.lang };
         if (name) body.name = name.value;
         api(view === 'signup' ? '/api/auth/signup' : '/api/auth/login', body).then(function (j) {
@@ -94,6 +114,11 @@
       card.appendChild(h('p', { class: 'acc-msg ok', text: emailSent
         ? t('验证邮件已发送到 ' + acctEmail + '。点击邮件里的链接完成验证，之后会收到欢迎邮件。', 'We sent a verification link to ' + acctEmail + '. Open it to verify; a welcome email follows.')
         : t('账号已创建，但验证邮件没有发出（发件域名还没在 Resend 验证）。链接已打印在本地助手的终端里。', 'Your account is created, but the verification email couldn’t be sent (the sender domain isn’t verified in Resend yet). The link is printed in the helper’s terminal.') }));
+      if (CL()) {
+        card.appendChild(h('p', { class: 'acc-sub', text: t('验证后会自动登录，计划和进度会同步到你的账号。没收到？看看垃圾邮件，或者', 'You’ll be signed in when you open it, and your plan and progress will sync to your account. Nothing yet? Check spam, or') }, [
+          h('button', { type: 'button', class: 'acc-link', text: t('重新发送', 'resend it'), onclick: function (e) { var b = e.currentTarget; CL().resend(acctEmail).then(function (r) { b.textContent = r.ok ? t('已重新发送', 'sent again') : err(r.error); }); } })]));
+        card.appendChild(h('button', { class: 'onb-btn', text: t('先继续', 'Continue for now'), onclick: function () { close(); if (onDone) onDone(null); } }));
+      } else
       card.appendChild(h('button', { class: 'onb-btn', text: t('继续', 'Continue'), onclick: function () { close(); if (onDone && acct.token) api('/api/auth/me').then(function (j) { if (j.user) onDone(toProfile(j.user)); }); } }));
     } else if (view === 'forgot') {
       card.appendChild(h('h2', { text: t('找回密码', 'Reset your password') }));
@@ -104,6 +129,16 @@
       form.appendChild(h('button', { type: 'button', class: 'acc-link', text: t('返回登录', 'Back to sign in'), onclick: function () { view = 'signin'; render(); } }));
       form.onsubmit = function (e) {
         e.preventDefault(); busy(true);
+        if (CL()) {
+          CL().forgot(em.value.trim()).then(function (r) {
+            busy(false);
+            if (!r.ok && r.error !== 'other') { msg.textContent = err(r.error === 'net' ? 'cloudnet' : r.error); return; }
+            msg.className = 'acc-msg ok';
+            msg.textContent = t('如果这个邮箱有账号，重置链接已经发出。', 'If that email has an account, a reset link is on its way.');
+            track('password_reset_requested', { backend: 'supabase' });
+          });
+          return;
+        }
         api('/api/auth/forgot', { email: em.value }).then(function (j) {
           busy(false);
           if (j._status !== 200) { msg.textContent = err(j.error); return; }
@@ -119,6 +154,15 @@
       form.appendChild(p1); form.appendChild(btn); form.appendChild(msg);
       form.onsubmit = function (e) {
         e.preventDefault(); busy(true);
+        if (CL()) {
+          CL().setPassword(p1.value).then(function (r) {
+            busy(false);
+            if (!r.ok) { msg.textContent = err(r.error === 'net' ? 'cloudnet' : r.error); return; }
+            track('password_reset_completed', { backend: 'supabase' });
+            view = 'done'; render();
+          });
+          return;
+        }
         api('/api/auth/reset', { token: resetToken, password: p1.value }).then(function (j) {
           busy(false);
           if (j._status !== 200) { msg.textContent = err(j.error); return; }
@@ -128,7 +172,7 @@
       };
     } else if (view === 'done') {
       card.appendChild(h('h2', { text: t('密码已更新', 'Password updated') }));
-      card.appendChild(h('p', { class: 'acc-msg ok', text: t('你已登录。其他设备上的登录已退出。', 'You’re signed in. Other sessions were signed out.') }));
+      card.appendChild(h('p', { class: 'acc-msg ok', text: CL() ? t('密码已更新，你已登录。', 'Your password is updated and you’re signed in.') : t('你已登录。其他设备上的登录已退出。', 'You’re signed in. Other sessions were signed out.') }));
       card.appendChild(h('button', { class: 'onb-btn', text: t('开始练习', 'Start practising'), onclick: close }));
     }
     if (view !== 'check' && view !== 'done') card.appendChild(form);
@@ -147,7 +191,7 @@
     try { var u = new URL(location.href); u.searchParams.delete(param); history.replaceState(null, '', u.pathname + (u.search || '') + u.hash); } catch (e) { }
   }
   function refresh() {
-    if (!SERVED || !acct.token) return;
+    if (!SERVED || !acct.token || CL()) return;
     api('/api/auth/me').then(function (j) {
       if (j._status === 401) { acct.token = null; saveAcct(); return; }
       if (j.user && window.BDJJourney && window.BDJJourney.setProfile) {
@@ -174,7 +218,7 @@
   window.BDJAccount = {
     open: open, close: close, token: function () { return acct.token; },
     resend: function () { return api('/api/auth/resend', {}); },
-    signOut: function () { if (acct.token && SERVED) api('/api/auth/logout', {}).catch(function () { }); acct.token = null; saveAcct(); },
+    signOut: function () { if (CL()) { CL().signOut(); return; } if (acct.token && SERVED) api('/api/auth/logout', {}).catch(function () { }); acct.token = null; saveAcct(); },
     banner: banner, api: api
   };
 })();

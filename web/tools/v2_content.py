@@ -92,6 +92,9 @@ JOURNEY = {
 #   apple           Sign in with Apple Services ID + redirect URI registered for the same domain
 #   firebase        Firebase web config with Phone auth enabled (SMS code + invisible reCAPTCHA)
 #   googleIOSClientId  OAuth client ID of type iOS (the iPhone app signs in through the system web sheet)
+# Supabase (js/cloud.js): accounts (email, phone via Twilio, Google, Apple) + cross-device progress.
+# The project URL and the PUBLISHABLE key are public by design; never put the service-role / secret key here.
+SUPABASE = {"url": "https://pdiornnmqwashlrwqfiv.supabase.co", "key": "sb_publishable_dwYZhWYrJ_ZCI6muj1oDHQ_rpljeGml"}
 AUTH = {"googleClientId": "344045409884-kd3as4a4nir8gcsth4rimqok4utrotu3.apps.googleusercontent.com", "googleIOSClientId": "", "apple": {"clientId": "com.amyli.baduanjin.web", "redirectURI": "https://brocade-mirror-web.vercel.app/web/baduanjin-v2.html"}, "firebase": None}
 
 # PostHog product analytics (js/analytics.js). Project API key of "Default project" (US Cloud, id 723614):
@@ -111,6 +114,7 @@ data = {
     "paths": {"video": "../../me_video/", "thumb": "content/v2/thumbs/"},
     "journey": True,
     "auth": AUTH,
+    "supabase": SUPABASE,
     "posthog": POSTHOG,
     "vapi": VAPI,
     "strings": {

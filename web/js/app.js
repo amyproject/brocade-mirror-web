@@ -152,7 +152,8 @@
     seg: -1, lastT: 0, stepPaused: null, scrubbing: false, musicOn: false, seekGuard: 0
   };
   function savePrefs() { writeJSON(PREF_KEY, S); }
-  function saveProg() { writeJSON(PROG_KEY, P); }
+  var progListeners = [];  // js/cloud.js syncs progress across devices
+  function saveProg() { writeJSON(PROG_KEY, P); progListeners.forEach(function (f) { try { f(); } catch (e) { } }); }
   // Product analytics (js/analytics.js → PostHog); a no-op when the site has no key.
   var booted = false;
   function track(ev, props) { if (booted && window.BDJTrack) window.BDJTrack(ev, props); }
@@ -1432,7 +1433,7 @@
     setFocus: setFocus, master: master, drawerOpen: function () { return !$('drawer').hidden; },
     musicOn: function () { return R.musicOn; }, renderAll: function () { renderAll(); onSegChange(); applyZoom(); },
     // for js/journey.js (onboarding, progress)
-    saveProg: saveProg, dayKey: dayKey, selectTrack: selectTrack, musicPlay: musicPlay, musicPause: musicPause, trackById: trackById, tracksOf: tracksOf,
+    saveProg: saveProg, onProgress: progListeners, dayKey: dayKey, selectTrack: selectTrack, musicPlay: musicPlay, musicPause: musicPause, trackById: trackById, tracksOf: tracksOf,
     setBg: setBg, setLang: function (l) { if (S.lang !== l) $('btnLang').click(); },
     clipUrl: function (id, angle) { var o = D.outfits[0], md = o.movesDir || (o.dir && o.dir + '/moves'); return U(PATH.video + md + '/' + D.moves[id - 1].slug + '/' + (angle || 'front') + '.mp4'); },
     bgUrl: function (bg) { return bg.file ? U(PATH.bg + bg.file) : ''; }, picUrl: function (x) { return x.picture ? U(PATH.pic + x.picture) : U(PATH.art + x.icon); },

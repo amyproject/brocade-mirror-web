@@ -21,6 +21,10 @@
       },
       "firebase": null
     },
+    "supabase": {
+      "url": "https://pdiornnmqwashlrwqfiv.supabase.co",
+      "key": "sb_publishable_dwYZhWYrJ_ZCI6muj1oDHQ_rpljeGml"
+    },
     "posthog": {
       "key": "phc_udp6ouNaER4oYaYXjKgcePdUkCFkWcMW59uxWcBRk9KJ",
       "host": "https://us.i.posthog.com"
