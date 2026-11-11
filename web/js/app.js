@@ -212,7 +212,17 @@
   }
   function thumbKey(outfit) { var o = outfitById(outfit || S.outfit); return o.thumb || (o.id === 'modern' ? 'gym' : 'red'); }
   function thumbSrc(id, outfit) { return PATH.thumb + 'thumb_' + thumbKey(outfit) + '_' + id + '.jpg'; }
-  function music() { return D.music && D.music.tracks ? D.music : { instruments: [], tracks: [] }; }
+  // Tracks with no licence for public redistribution are only on this Mac; hide them on a hosted copy.
+  var LOCAL_ONLY_TRACKS = ['05-bamboo-flute-guzheng-zen-long.mp3'], _music = null;
+  function music() {
+    if (_music) return _music;
+    if (!(D.music && D.music.tracks)) return { instruments: [], tracks: [] };
+    var local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    if (local) return (_music = D.music);
+    var m = {}; for (var k in D.music) m[k] = D.music[k];
+    m.tracks = D.music.tracks.filter(function (x) { return LOCAL_ONLY_TRACKS.indexOf(x.file) < 0; });
+    return (_music = m);
+  }
 
   // Segments: steps (red single move) or chapters (full routine).
   function segments() {

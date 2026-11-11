@@ -2,6 +2,7 @@
 // usage: shot <index.html> <readAccessRoot> <steps.json> <outdir> [width height]
 // steps: [{"js": "...", "wait": ms} | {"shot": "name.png"} (window capture) | {"snap": "name.png"} (WKWebView snapshot) | {"wait": ms}]
 // Console output and errors from the page are printed to stdout as [console] lines.
+// Pages run silent: media is forced muted, speech is skipped, Web Audio goes to a zero-gain node.
 import AppKit
 import WebKit
 let a = CommandLine.arguments
@@ -13,6 +14,7 @@ try? FileManager.default.createDirectory(atPath: outDir, withIntermediateDirecto
 typealias CGWLCI = @convention(c) (CGRect, UInt32, UInt32, UInt32) -> Unmanaged<CGImage>?
 let capWin = unsafeBitCast(dlsym(UnsafeMutableRawPointer(bitPattern: -2), "CGWindowListCreateImage"), to: CGWLCI.self)
 let hook = """
+(function(){/* silent by default: tests never play music, video sound or speech */const P=HTMLMediaElement.prototype,op=P.play,md=Object.getOwnPropertyDescriptor(P,'muted');Object.defineProperty(P,'muted',{get:function(){return md.get.call(this)},set:function(){md.set.call(this,true)},configurable:true});P.play=function(){md.set.call(this,true);return op.apply(this,arguments)};if(window.speechSynthesis)speechSynthesis.speak=function(u){setTimeout(function(){try{u.onend&&u.onend()}catch(e){}},50)};const oc=AudioNode.prototype.connect;AudioNode.prototype.connect=function(t){if(window.AudioDestinationNode&&t instanceof AudioDestinationNode){const c=this.context;if(!c.__mute){c.__mute=c.createGain();c.__mute.gain.value=0;oc.call(c.__mute,t)}return oc.call(this,c.__mute)}return oc.apply(this,arguments)};})();
 (function(){const post=(k,a)=>{try{window.webkit.messageHandlers.log.postMessage(k+': '+Array.from(a).map(x=>{try{return typeof x==='string'?x:JSON.stringify(x)}catch(e){return String(x)}}).join(' '))}catch(e){}};
 ['log','warn','error','info'].forEach(k=>{const o=console[k];console[k]=function(){post(k,arguments);o.apply(console,arguments)}});
 window.addEventListener('error',e=>post('onerror',[e.message+' @'+(e.filename||'')+':'+e.lineno]));

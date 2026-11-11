@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/", "destination": "/web/baduanjin-v2.html", "permanent": false }
+  ],
+  "headers": [
+    { "source": "/(.*)\\.(mp4|mp3|jpg|png)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
+  ]
+}

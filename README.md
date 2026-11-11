@@ -14,6 +14,11 @@ can talk to mid-workout (Vapi), learning path with reputable sources (Exa), emai
 **Secret keys are not in this repo.** The local helper reads them from `~/.config/brocade-mirror/`
 (`typesafe.key`, `deepgram.key`, `exa.key`, `resend.key`, optional `stripe.key`).
 
-**Media not included:** the pages also load background music (`../music/`), the classic page's instructor
-clips (`../assets/`), art images (`../Baduanjin/Resources/`) and avatar videos (`../me_video/`) from folders
-next to `web/`, which are not published here, so those won't play in a fresh clone.
+**Hosting (Vercel or any static host):** deploy the repo root; `vercel.json` sends `/` to Brocade Mirror. The
+pages load media by absolute path, so it is published here too: avatar clips (`me_video/`), background music
+and credits (`music/`), art and backgrounds (`Baduanjin/Resources/`). Not included: music track 5 (no
+licence for redistribution; hidden on hosted copies) and the classic page's instructor clips (`assets/`).
+
+On a static host the AI features that need the local helper's secret keys (Ask via TypeSafe, voice commands,
+live research, email accounts, donations) fall back or show that they need the helper; the offline Ask
+matcher, voiceover, learning path and the Vapi AI instructor work without it.

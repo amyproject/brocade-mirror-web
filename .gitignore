@@ -1,8 +1,19 @@
-# This repo publishes only the web app (web/). Everything else in baduanjin_app/ stays local.
+# This repo publishes the web app (web/) plus the media it loads by absolute path.
+# Everything else in baduanjin_app/ (iOS app, builds) stays local.
 /*
 !/web/
+!/music/
+!/Baduanjin/
 !/.gitignore
 !/README.md
+!/vercel.json
+/Baduanjin/*
+!/Baduanjin/Resources/
+/Baduanjin/Resources/*
+!/Baduanjin/Resources/Art/
+!/Baduanjin/Resources/Backgrounds/
+# no licence for public redistribution: kept locally only (hidden on hosted copies by js/app.js)
+/music/tracks/05-bamboo-flute-guzheng-zen-long.mp3
 .DS_Store
 __pycache__/
 *.pyc
