@@ -1,0 +1,15 @@
+[{"js":"window.BDJ_FORCE_CANVAS=true; __bdj.single.comp.apply(); __bdj.gridTiles.forEach(t=>t.comp.apply()); return 'ok'","wait":2500},
+ {"js":"__bdj.seek(4); return 'ok'","wait":900},
+ {"snap":"10_en_original.png"},
+ {"js":"__bdj.selectMove(2); __bdj.setBg('mountains'); return 'ok'","wait":2000},
+ {"js":"__bdj.setSpeed(0.5); __bdj.play(); return 'ok'","wait":2500},
+ {"js":"__bdj.pause(); return JSON.stringify({t:__bdj.master().video.currentTime, rate:__bdj.master().video.playbackRate})","wait":600},
+ {"snap":"11_move2_mountains_halfspeed.png"},
+ {"js":"__bdj.selectMove(1); __bdj.setBg('bamboo'); return 'ok'","wait":1500},
+ {"js":"__bdj.toggleGrid(); return 'ok'","wait":2500},
+ {"js":"__bdj.seek(6); return 'ok'","wait":1500},
+ {"snap":"12_grid_bamboo.png"},
+ {"js":"__bdj.toggleGrid(); __bdj.selectMove(5); __bdj.selectOutfit('modern'); __bdj.setBg('lotus'); return 'ok'","wait":2500},
+ {"js":"__bdj.seek(20); return 'ok'","wait":1500},
+ {"snap":"13_modern_lotus.png"}
+]

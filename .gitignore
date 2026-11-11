@@ -1,0 +1,10 @@
+# This repo publishes only the web app (web/). Everything else in baduanjin_app/ stays local.
+/*
+!/web/
+!/.gitignore
+!/README.md
+.DS_Store
+__pycache__/
+*.pyc
+*.key
+.env*

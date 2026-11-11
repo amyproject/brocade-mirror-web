@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F0E6">
+<title>锦程 · Brocade Path — 八段锦</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="paper" aria-hidden="true"></div>
+<svg class="mountains" aria-hidden="true" viewBox="0 0 1440 220" preserveAspectRatio="none">
+  <path d="M0 220 L0 150 C80 120 140 90 210 110 C270 128 300 70 360 60 C420 50 460 120 540 130 C620 140 660 95 730 85 C800 75 840 135 930 140 C1010 145 1050 90 1120 80 C1200 70 1250 130 1330 125 C1380 122 1420 110 1440 105 L1440 220 Z" fill="currentColor" opacity=".55"/>
+  <path d="M0 220 L0 185 C120 160 190 150 280 165 C360 178 420 140 520 150 C640 162 700 190 820 178 C930 166 990 150 1100 160 C1220 171 1300 190 1440 170 L1440 220 Z" fill="currentColor"/>
+</svg>
+
+<header class="top">
+  <div class="brand">
+    <div class="seal-logo" aria-hidden="true">锦程</div>
+    <div class="brand-text">
+      <h1 data-i18n="appTitle">锦程</h1>
+      <p data-i18n="appSub">八段锦 · 一式一式学到位</p>
+    </div>
+  </div>
+  <nav class="modes" role="tablist" aria-label="mode">
+    <button role="tab" data-mode="move" class="mode-btn" data-i18n="modeMove">单式精学</button>
+    <button role="tab" data-mode="full" class="mode-btn" data-i18n="modeFull">全套跟练</button>
+  </nav>
+  <div class="music-dock" id="musicDock" role="group" aria-label="music">
+    <div class="md-insts" id="mdInsts"></div>
+    <button class="md-play" id="mdPlay" aria-label="Play music"><svg class="ic"><use href="#i-play"/></svg></button>
+    <button class="md-now" id="mdNow"></button>
+  </div>
+  <div class="top-actions">
+    <button class="pill tour-pill" id="btnTour"><svg class="ic"><use href="#i-tour"/></svg><span data-i18n="tourBtn">引导</span></button>
+    <button class="pill" id="btnScene" aria-haspopup="dialog"><svg class="ic"><use href="#i-scene"/></svg><span data-i18n="scene">布景 · 音乐 · 服装</span></button>
+    <button class="pill lang" id="btnLang" aria-label="Language"><span class="l-zh">中</span><span class="sep">/</span><span class="l-en">EN</span></button>
+    <button class="icon-btn" id="btnHelp" aria-label="Help"><svg class="ic"><use href="#i-help"/></svg></button>
+  </div>
+</header>
+<div class="brush-rule" aria-hidden="true"></div>
+
+<main class="layout">
+  <section class="stage-col">
+    <div class="stage-wrap">
+      <div class="stage" id="stage">
+        <!-- single view -->
+        <div class="view single" id="singleView"></div>
+        <!-- 4-angle grid -->
+        <div class="view grid" id="gridView" hidden></div>
+
+        <div class="ov ov-title" id="ovTitle"></div>
+        <div class="ov ov-chips" id="ovChips"></div>
+        <div class="ov ov-breath" id="ovBreath" hidden>
+          <div class="breath-ring">
+            <svg class="breath-arc" viewBox="0 0 100 100" aria-hidden="true"><circle class="ba-track" cx="50" cy="50" r="46"/><circle class="ba-fill" cx="50" cy="50" r="46" pathLength="100"/></svg>
+            <div class="breath-core"></div>
+            <div class="breath-label"><b id="breathZh">吸</b><span id="breathEn">Inhale</span></div>
+          </div>
+          <div class="breath-sub" id="breathSub"></div>
+        </div>
+        <div class="ov ov-hub" id="ovHub" hidden>
+          <div class="hub-ring"><div class="hub-core"></div><div class="hub-txt"><b id="hubZh">吸</b><span id="hubStep"></span></div></div>
+        </div>
+        <div class="ov ov-next" id="ovNext" hidden></div>
+        <div class="ov ov-caption" id="ovCaption" hidden></div>
+        <div class="ov ov-zoom" id="ovZoom" hidden>
+          <span id="zoomLabel"></span><button id="zoomReset" data-i18n="reset">复位</button>
+        </div>
+        <div class="ov ov-paused" id="ovPaused" hidden>
+          <button class="big-play" id="bigPlay" aria-label="Play"><svg class="ic"><use href="#i-play"/></svg></button>
+          <div class="pause-hint" id="pauseHint"></div>
+        </div>
+        <div class="ov ov-msg" id="ovMsg" hidden></div>
+        <button class="ov ov-full" id="btnFull" aria-label="Fullscreen"><svg class="ic"><use href="#i-full"/></svg></button>
+      </div>
+    </div>
+
+    <div class="transport card">
+      <div class="caption-bar" id="capBar" aria-live="polite"></div>
+      <div class="timeline" id="timeline" role="slider" tabindex="0" aria-label="timeline">
+        <div class="tl-track"><div class="tl-segs" id="tlSegs"></div><div class="tl-fill" id="tlFill"></div>
+          <div class="tl-ab" id="tlAB" hidden></div>
+          <div class="tl-head" id="tlHead"></div></div>
+      </div>
+      <div class="tl-meta">
+        <span class="time" id="timeNow">0:00</span>
+        <span class="step-now" id="stepNow"></span>
+        <span class="ab" title="A–B">
+          <button class="chip mini" id="btnA">A</button><button class="chip mini" id="btnB">B</button><button class="chip mini ghost" id="btnABClear" data-i18n="clear">清除</button>
+        </span>
+        <span class="time" id="timeDur">0:00</span>
+      </div>
+
+      <div class="ctl-row main-ctl">
+        <div class="cluster play-cluster">
+          <button class="icon-btn" id="btnPrev" aria-label="Previous step"><svg class="ic"><use href="#i-prev"/></svg></button>
+          <button class="play" id="btnPlay" aria-label="Play"><svg class="ic"><use href="#i-play"/></svg></button>
+          <button class="icon-btn" id="btnNext" aria-label="Next step"><svg class="ic"><use href="#i-next"/></svg></button>
+        </div>
+
+        <div class="cluster speed">
+          <label for="speed" class="lbl" data-i18n="speed">速度</label>
+          <div class="speed-box">
+            <input type="range" id="speed" min="0.25" max="2" step="0.05" value="1" list="speedMarks">
+            <datalist id="speedMarks"><option value="0.25"></option><option value="0.5"></option><option value="0.75"></option><option value="1"></option><option value="1.5"></option><option value="2"></option></datalist>
+            <div class="speed-ticks" aria-hidden="true"><span style="left:0%">¼</span><span style="left:14.29%">½</span><span style="left:42.86%">1×</span><span style="left:100%">2×</span></div>
+          </div>
+          <output id="speedOut" class="speed-out">1.00×</output>
+        </div>
+
+        <div class="cluster toggles">
+          <button class="tog" id="btnLoop" aria-pressed="false"><svg class="ic"><use href="#i-loop"/></svg><span id="loopLabel" data-i18n="loopClip">循环</span></button>
+          <button class="tog" id="btnStepPause" aria-pressed="false"><svg class="ic"><use href="#i-steppause"/></svg><span data-i18n="stepPause">逐步停</span></button>
+          <button class="tog" id="btnCues" aria-pressed="true"><svg class="ic"><use href="#i-breath"/></svg><span data-i18n="cues">提示</span></button>
+        </div>
+      </div>
+
+      <div class="ctl-row sub-ctl">
+        <div class="cluster angles" role="group" id="angleGroup"></div>
+        <button class="tog" id="btnMirror" aria-pressed="false"><svg class="ic"><use href="#i-mirror"/></svg><span data-i18n="mirror">镜像</span></button>
+        <div class="cluster zoom">
+          <span class="lbl" data-i18n="zoom">放大</span>
+          <div class="chips" id="focusChips"></div>
+          <input type="range" id="zoom" min="1" max="3" step="0.05" value="1" aria-label="zoom">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="panel-col">
+    <div class="card scene-card" id="sceneCard">
+      <div class="sc-part sc-av"><div class="sc-k" data-i18n="avatarK">形象</div><div class="sc-avatars" id="scAvatars"></div></div>
+      <div class="sc-part sc-bg"><div class="sc-k"><span data-i18n="bgK">背景</span><b id="scBgName"></b></div><div class="sc-bgs" id="scBgs"></div></div>
+    </div>
+    <div class="move-strip" id="moveStrip" role="tablist"></div>
+    <div class="card panel" id="panel"></div>
+  </aside>
+</main>
+
+<!-- Scene drawer: background / music / outfit -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="drawer-head">
+    <h2 id="drawerTitle" data-i18n="scene">布景 · 音乐 · 服装</h2>
+    <button class="icon-btn" id="drawerClose" aria-label="Close"><svg class="ic"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer-body">
+    <section>
+      <h3><span class="h-zh" data-i18n="outfit">服装</span></h3>
+      <div class="outfits" id="outfitList"></div>
+    </section>
+    <section>
+      <h3 data-i18n="background">背景</h3>
+      <div class="bgs" id="bgList"></div>
+      <p class="fine" id="bgNote"></p>
+    </section>
+    <section>
+      <h3 data-i18n="music">音乐</h3>
+      <div class="instruments" id="instList"></div>
+      <div class="tracks" id="trackList"></div>
+      <div class="music-ctl">
+        <button class="tog" id="btnMusicPlay"><svg class="ic"><use href="#i-play"/></svg><span id="musicPlayLabel"></span></button>
+        <button class="tog" id="btnPlayAll" aria-pressed="false"><svg class="ic"><use href="#i-list"/></svg><span data-i18n="playAll">连续播放</span></button>
+        <button class="tog" id="btnSound" aria-pressed="false"><svg class="ic"><use href="#i-sound"/></svg><span data-i18n="videoSound">原声</span></button>
+        <label class="vol"><svg class="ic"><use href="#i-sound"/></svg><input type="range" id="volume" min="0" max="1" step="0.01" value="0.6" aria-label="volume"></label>
+      </div>
+      <p class="fine now-playing" id="nowPlaying"></p>
+    </section>
+  </div>
+</aside>
+
+<!-- Help / about -->
+<div class="modal" id="helpModal" role="dialog" aria-modal="true" hidden>
+  <div class="modal-card">
+    <button class="icon-btn modal-x" id="helpClose" aria-label="Close"><svg class="ic"><use href="#i-close"/></svg></button>
+    <div id="helpBody"></div>
+  </div>
+</div>
+
+<!-- interactive walkthrough -->
+<div class="tour" id="tour" hidden>
+  <div class="tour-dim t-top"></div><div class="tour-dim t-left"></div><div class="tour-dim t-right"></div><div class="tour-dim t-bottom"></div>
+  <div class="tour-spot" id="tourSpot"></div>
+  <div class="tour-card" id="tourCard" role="dialog" aria-live="polite"></div>
+</div>
+
+<audio id="music" preload="none"></audio>
+
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5" width="3.6" height="14" rx="1" fill="currentColor"/><rect x="13.9" y="5" width="3.6" height="14" rx="1" fill="currentColor"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="M6 5v14M18 6l-9 6 9 6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M18 5v14M6 6l9 6-9 6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-loop" viewBox="0 0 24 24"><path d="M4 12a7 7 0 0 1 12-5l2 2M20 12a7 7 0 0 1-12 5l-2-2M18 4v5h-5M6 20v-5h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-steppause" viewBox="0 0 24 24"><path d="M3 18h4v-4h4v-4h4V6h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mirror" viewBox="0 0 24 24"><path d="M12 3v18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2.2"/><path d="M9 7 3 17h6zM15 7l6 10h-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2.9-1.2 1.8v.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-scene" viewBox="0 0 24 24"><path d="M3 18c3-5 5-8 7.5-8S14 14 16 14s3-2 5-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="17" cy="6.5" r="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 21h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M4 7h11M4 12h11M4 17h7M18 15v5l3-2.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-breath" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2.6"/></symbol>
+    <symbol id="i-tour" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.5 13.6 13.6 8.5 15.5 10.4 10.4z" fill="currentColor"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 120 40"><path d="M8 30c-6 0-6-9 1-9 0-7 9-9 13-4 3-8 16-8 18 1 5-3 12 0 11 6 7 0 8 6 3 6H38c4 0 6-5 2-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M62 24c4-6 14-6 16 0 6-3 13 2 10 7 6 1 6 6 0 6H66c-5 0-5-6 0-6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<script src="data.js"></script>
+<script src="js/compositor.js"></script>
+<script src="js/app.js"></script>
+<script src="js/tour.js"></script>
+</body>
+</html>

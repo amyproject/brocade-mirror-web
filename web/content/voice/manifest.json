@@ -1,0 +1,294 @@
+{
+ "voice": "aura-2-athena-en",
+ "path": "content/voice/en/",
+ "clips": {
+  "m1-name": {
+   "h": "8baf2f264f85",
+   "dur": 2.18,
+   "en": "Move one. Holding Up the Heavens.",
+   "zh": "第壹式，两手托天理三焦。"
+  },
+  "m1-intro": {
+   "h": "3965c6542c1f",
+   "dur": 22.61,
+   "en": "Move one: Holding Up the Heavens. Full-body stretch to regulate the Triple Burner. The upward stretch lengthens the spine and limbs, opens the chest and abdomen, moves qi and blood through the whole body, and eases stiff shoulders and desk fatigue. Breathing: Inhale as you push up, pause briefly at the top, exhale as the arms float down.",
+   "zh": "第壹式，两手托天理三焦。舒展全身，调理三焦。上举拔伸使脊柱与四肢充分舒展，牵动胸腹，促进全身气血流通，缓解肩颈僵硬与久坐疲劳。呼吸：上托时吸气，稍停闭气，下落时呼气。"
+  },
+  "m1-s1": {
+   "h": "28d202ea4d02",
+   "dur": 6.05,
+   "en": "Breathe out. Arms rotate out and drop slightly; interlace the fingers in front of the abdomen, palms up.",
+   "zh": "呼气。两臂外旋微下落，两掌五指分开在腹前交叉，掌心向上。"
+  },
+  "m1-s2": {
+   "h": "e4f41b6424c5",
+   "dur": 7.42,
+   "en": "Breathe in. Slowly straighten the legs; lift the palms to the chest, then rotate the arms inward and push upward.",
+   "zh": "吸气。两腿徐缓挺膝伸直，两掌上托至胸前，随之两臂内旋向上托起，掌心向上。"
+  },
+  "m1-s3": {
+   "h": "7aa5542d7cae",
+   "dur": 6.86,
+   "en": "Hold. Look up at the hands, keep pushing until the elbows are straight, then tuck the chin and hold for a moment.",
+   "zh": "停。抬头，目视两掌；两掌继续上托，肘关节伸直，同时下颏内收，动作略停。"
+  },
+  "m1-s4": {
+   "h": "dac99b809b0c",
+   "dur": 7.85,
+   "en": "Breathe out. Sink the weight gently, let the arms separate and float down to the sides, palms ending in front of the abdomen.",
+   "zh": "呼气。身体重心缓缓下降，两臂分别向身体两侧下落，两掌捧于腹前。"
+  },
+  "m2-name": {
+   "h": "f2f05cfdca38",
+   "dur": 2.86,
+   "en": "Move two. Drawing the Bow to Shoot the Eagle.",
+   "zh": "第贰式，左右开弓似射雕。"
+  },
+  "m2-intro": {
+   "h": "18016d1257fd",
+   "dur": 19.73,
+   "en": "Move two: Drawing the Bow to Shoot the Eagle. Opens the chest and strengthens the arms. Opening the shoulders stimulates the back and the Governor Vessel and deepens breathing; the horse stance builds leg strength and balance. Breathing: Inhale as you draw the bow, exhale as you return.",
+   "zh": "第贰式，左右开弓似射雕。宽胸理气，强健手臂。展肩扩胸能刺激督脉与背部腧穴，增强肺的呼吸功能；马步可增强下肢力量，提高平衡能力。呼吸：开弓时吸气，回收时呼气。"
+  },
+  "m2-s1": {
+   "h": "6328f721108e",
+   "dur": 5.69,
+   "en": "Breathe out. Step out to the left; arms cross in front of the chest, left hand outside.",
+   "zh": "呼气。左脚向左侧开步站立，两腿膝关节自然伸直；两掌向上交叉于胸前，左掌在外。"
+  },
+  "m2-s2": {
+   "h": "0ff5cc0a9077",
+   "dur": 10.85,
+   "en": "Breathe in. Sink into a horse stance; the right hand curls into a claw and draws to the shoulder while the left hand forms the “eight” shape and pushes out, wrist up, eyes following it.",
+   "zh": "吸气。两腿屈膝半蹲成马步；右掌屈指成“爪”向右拉至肩前，左掌成“八字掌”向左推出，坐腕竖指，目视左掌方向。"
+  },
+  "m2-s3": {
+   "h": "b42f13bfe14a",
+   "dur": 9.26,
+   "en": "Breathe out. Shift the weight right, open both hands; the right hand arcs out at shoulder height, eyes follow; keep shifting and draw the left foot in.",
+   "zh": "呼气。重心右移，两手变自然掌，右手向右划弧，与肩同高，目视右掌；重心继续右移，左脚回收。"
+  },
+  "m2-s4": {
+   "h": "f471599eb0a0",
+   "dur": 6.38,
+   "en": "Breathe out. Hands settle in front of the abdomen, fingertips facing — ready for the other side.",
+   "zh": "呼气。两掌捧于腹前，指尖相对，准备换另一侧。"
+  },
+  "m3-name": {
+   "h": "48734b960a60",
+   "dur": 3.26,
+   "en": "Move three. Separating Heaven and Earth.",
+   "zh": "第叁式，调理脾胃须单举。"
+  },
+  "m3-intro": {
+   "h": "17bdefae0abd",
+   "dur": 20.06,
+   "en": "Move three: Separating Heaven and Earth. One hand up, one down to balance the spleen and stomach. The opposing stretch gently massages the abdominal organs to support digestion, and improves spinal flexibility and stability. Breathing: Inhale as one hand lifts and the other presses; exhale as they return.",
+   "zh": "第叁式，调理脾胃须单举。一升一降，调和脾胃。上下对拉牵动腹腔，对脾胃肝胆起到按摩作用，促进消化吸收；同时增强脊柱的灵活性与稳定性。呼吸：上举下按时吸气，落回时呼气。"
+  },
+  "m3-s1": {
+   "h": "cb58cd310fe1",
+   "dur": 6.5,
+   "en": "Breathe out. Straighten the legs slowly; hold the palms up in front of the abdomen, fingertips facing.",
+   "zh": "呼气。两腿徐缓挺膝伸直，两掌捧于腹前，掌心向上，指尖相对。"
+  },
+  "m3-s2": {
+   "h": "5c94ab491b52",
+   "dur": 11.54,
+   "en": "Breathe in. One palm rises past the face, turns over and pushes overhead through the heel of the hand; the other presses down beside the hip, fingers forward — stretch them apart.",
+   "zh": "吸气。一掌上托经面前翻掌举至头顶上方，力达掌根；另一掌内旋下按至髋旁，指尖向前，两掌上下对拉。"
+  },
+  "m3-s3": {
+   "h": "26f1340ea389",
+   "dur": 7.61,
+   "en": "Breathe out. Relax the waist, sink the weight; the raised hand comes down in front of the body and both palms gather at the abdomen.",
+   "zh": "呼气。松腰沉髋，重心缓缓下降；上举之掌经体前下落，两掌捧于腹前。"
+  },
+  "m3-s4": {
+   "h": "ca9a535fa774",
+   "dur": 7.37,
+   "en": "Breathe in. Switch sides: the other hand lifts while the opposite hand presses down — same shape, mirrored.",
+   "zh": "吸气。换另一侧：另一掌上举、对侧下按，动作相同，方向相反。"
+  },
+  "m4-name": {
+   "h": "2c25b2923185",
+   "dur": 3.74,
+   "en": "Move four. Wise Owl Gazes Backward.",
+   "zh": "第肆式，五劳七伤往后瞧。"
+  },
+  "m4-intro": {
+   "h": "b23bf2b97a87",
+   "dur": 18.94,
+   "en": "Move four: Wise Owl Gazes Backward. Rotate the arms and look back to relieve fatigue. Turning the head and rotating the arms stimulates the neck and shoulder blades, improves circulation, relieves eye strain and calms the nervous system. Breathing: Inhale as you turn to look back, exhale as you turn forward again.",
+   "zh": "第肆式，五劳七伤往后瞧。旋臂转头，消除疲劳。转头旋臂可刺激颈部与肩胛周围，改善颈椎与肩部血液循环，缓解眼疲劳，调节神经系统。呼吸：转头后瞧时吸气，转回时呼气。"
+  },
+  "m4-s1": {
+   "h": "442864bb8c0e",
+   "dur": 7.13,
+   "en": "Breathe out. Straighten the legs slowly; arms long by the sides, palms facing back, fingertips down.",
+   "zh": "呼气。两腿徐缓挺膝伸直，两臂伸直，掌心向后，指尖向下。"
+  },
+  "m4-s2": {
+   "h": "54ca44bba560",
+   "dur": 7.46,
+   "en": "Breathe in. Rotate the arms fully outward, palms turning out; turn the head to look diagonally behind and pause.",
+   "zh": "吸气。两臂充分外旋，掌心向外；头向一侧后转，目视斜后方，动作略停。"
+  },
+  "m4-s3": {
+   "h": "fab3ac51e9c8",
+   "dur": 4.66,
+   "en": "Breathe out. Rotate the arms back in and turn the head to face forward.",
+   "zh": "呼气。两臂内旋，头转回正前方。"
+  },
+  "m4-s4": {
+   "h": "1f8bd0e9f0dd",
+   "dur": 7.9,
+   "en": "Breathe out. Relax the waist and hips, soften the knees, press the palms down beside the hips, fingers forward.",
+   "zh": "呼气。松腰沉髋，两膝微屈，两掌按于髋旁，掌心向下，指尖向前。"
+  },
+  "m5-name": {
+   "h": "8c99bf9893e1",
+   "dur": 2.62,
+   "en": "Move five. Swaying the Head and Tail.",
+   "zh": "第伍式，摇头摆尾去心火。"
+  },
+  "m5-intro": {
+   "h": "073b534860f4",
+   "dur": 20.26,
+   "en": "Move five: Swaying the Head and Tail. Sway and circle to calm the heart. The large side-bend and circle through the spine and waist relieve restlessness and internal heat; the horse stance strengthens the legs and lower back. Breathing: Exhale as you lean and sway, inhale as you return to center.",
+   "zh": "第伍式，摇头摆尾去心火。俯身摇转，清心降火。摇头摆尾使脊柱、腰腹大幅度侧屈环转，能疏通经络，消除心烦燥热；马步增强下肢与腰部力量。呼吸：俯身摇转时呼气，还原时吸气。"
+  },
+  "m5-s1": {
+   "h": "0b203fa0dadd",
+   "dur": 7.01,
+   "en": "Breathe in. Step into a horse stance, hands resting just above the knees, elbows soft, eyes forward.",
+   "zh": "吸气。开步成马步，两掌扶于膝上方，肘关节微屈，目视前方。"
+  },
+  "m5-s2": {
+   "h": "8df61d5fb6e2",
+   "dur": 7.3,
+   "en": "Breathe out. Shift the weight to one side, lean the torso that way, then fold forward, eyes toward the opposite foot.",
+   "zh": "呼气。重心向一侧移动，上体先向侧倾，随之俯身，目视对侧脚。"
+  },
+  "m5-s3": {
+   "h": "5fccb5e7c728",
+   "dur": 8.18,
+   "en": "Breathe out. Sweep the weight through center to the other side; the torso circles from the side through forward, while the tailbone swings the opposite way.",
+   "zh": "呼气。重心经中间移向另一侧，上体由侧经前俯向另一侧摇转，尾闾向相反方向摆动。"
+  },
+  "m5-s4": {
+   "h": "c158b9e22b3f",
+   "dur": 4.97,
+   "en": "Breathe in. Bring the weight back to center, rise up, lift the crown, return to the horse stance.",
+   "zh": "吸气。重心回到中间，上体立起，头向上顶，还原马步。"
+  },
+  "m6-name": {
+   "h": "4ebab2813417",
+   "dur": 2.21,
+   "en": "Move six. Touching the Toes.",
+   "zh": "第陆式，两手攀足固肾腰。"
+  },
+  "m6-intro": {
+   "h": "0efc1726516a",
+   "dur": 19.78,
+   "en": "Move six: Touching the Toes. Bend and lengthen to strengthen the kidneys and lower back. The deep forward fold and rise stimulate the spine and lower back, building strength and flexibility and helping prevent lumbar strain. Breathing: Inhale as the arms rise, exhale as you fold and slide down, inhale as you roll up.",
+   "zh": "第陆式，两手攀足固肾腰。前屈后伸，固肾强腰。大幅度前屈后伸可刺激脊柱与腰背部，增强腰部力量与柔韧性，对腰肌劳损有防治作用。呼吸：两臂上举时吸气，俯身下摩时呼气，起身时吸气。"
+  },
+  "m6-s1": {
+   "h": "52a5482570ad",
+   "dur": 4.01,
+   "en": "Breathe out. Stand with straight legs, fingertips pointing forward.",
+   "zh": "呼气。两腿挺膝伸直站立，两掌指尖向前。"
+  },
+  "m6-s2": {
+   "h": "56bf3e27a640",
+   "dur": 8.66,
+   "en": "Breathe in. Raise the arms forward and up, elbows straight, palms forward; then bend the elbows and press the palms down to the chest.",
+   "zh": "吸气。两臂向前、向上举起，肘关节伸直，掌心向前；随后两臂屈肘，两掌下按于胸前。"
+  },
+  "m6-s3": {
+   "h": "29c92afecbca",
+   "dur": 11.9,
+   "en": "Breathe out. Thread the hands behind and slide them down either side of the spine to the hips; fold forward and slide the hands down the backs of the legs, around the ankles to the tops of the feet.",
+   "zh": "呼气。两掌反穿至背后，沿脊柱两侧向下摩运至臀部；上体前俯，两掌沿腿后向下摩运，经脚两侧置于脚面。"
+  },
+  "m6-s4": {
+   "h": "725a0ae9e70b",
+   "dur": 8.66,
+   "en": "Breathe in. Reach the hands forward along the floor and let the arms lead the torso back up, arms long overhead, palms forward.",
+   "zh": "吸气。两掌沿地面前伸，用手臂带动上体起立，两臂伸直上举，掌心向前。"
+  },
+  "m7-name": {
+   "h": "62cb42fc36c0",
+   "dur": 3.29,
+   "en": "Move seven. Clenching Fists with Glaring Eyes.",
+   "zh": "第柒式，攒拳怒目增气力。"
+  },
+  "m7-intro": {
+   "h": "6fb7bf3e7290",
+   "dur": 14.26,
+   "en": "Move seven: Clenching Fists with Glaring Eyes. Punch and glare to build strength and vitality. Punching from a horse stance with a fierce gaze stimulates the liver meridian, nourishes the tendons and builds overall muscular strength. Breathing: Exhale as you punch, inhale as you draw the fist back.",
+   "zh": "第柒式，攒拳怒目增气力。冲拳瞪目，增长气力。马步冲拳、怒目瞪眼可刺激肝经，使肝血充盈，筋骨强健，增强全身肌肉力量。呼吸：冲拳时呼气，收拳时吸气。"
+  },
+  "m7-s1": {
+   "h": "6e51b5a74dcb",
+   "dur": 5.26,
+   "en": "Breathe in. Step into a horse stance, fists held at the waist, thumb side up.",
+   "zh": "吸气。开步成马步，两掌握固抱于腰侧，拳眼向上。"
+  },
+  "m7-s2": {
+   "h": "f91d9ee56e1c",
+   "dur": 7.7,
+   "en": "Breathe out. Slowly punch one fist forward at shoulder height, thumb side up; widen the eyes and glare at the fist.",
+   "zh": "呼气。一拳缓缓用力向前冲出，与肩同高，拳眼向上；瞪目，目视冲出之拳。"
+  },
+  "m7-s3": {
+   "h": "1bbdccf7de46",
+   "dur": 9.14,
+   "en": "Breathe in. Open the fist, rotate the arm so the palm faces out, circle the wrist, grasp, and pull the fist back to the waist.",
+   "zh": "吸气。拳变掌，臂内旋，掌心向外；腕关节旋转，屈指抓握，收拳回腰侧。"
+  },
+  "m7-s4": {
+   "h": "6a32630bd89f",
+   "dur": 6.46,
+   "en": "Breathe out. Repeat on the other side: punch, rotate, grasp and retract — mirrored.",
+   "zh": "呼气。换另一侧冲拳、旋腕、抓握、收拳，动作相同，方向相反。"
+  },
+  "m8-name": {
+   "h": "ab5dbef14903",
+   "dur": 2.42,
+   "en": "Move eight. Bouncing on the Toes.",
+   "zh": "第捌式，背后七颠百病消。"
+  },
+  "m8-intro": {
+   "h": "a4dc651eccf0",
+   "dur": 20.09,
+   "en": "Move eight: Bouncing on the Toes. Rise and drop the heels to shake off illness. Rising on the toes stimulates the foot meridians, and the gentle jolt as the heels drop relaxes every muscle — a calming close to the whole set. Breathing: Inhale as you rise onto the toes, exhale as the heels drop.",
+   "zh": "第捌式，背后七颠百病消。提踵颠足，百病自消。提踵颠足可刺激足部经络，脚跟落地时的轻微震动能放松全身肌肉，调和脏腑气血，是整套功法的收束放松。呼吸：提踵时吸气，脚跟下落时呼气。"
+  },
+  "m8-s1": {
+   "h": "42ae175ebb7e",
+   "dur": 5.09,
+   "en": "Breathe out. Feet together, arms hanging naturally, head upright, eyes forward.",
+   "zh": "呼气。两脚并拢，两臂自然垂于体侧，头正颈直，目视前方。"
+  },
+  "m8-s2": {
+   "h": "efede6cd7393",
+   "dur": 5.81,
+   "en": "Breathe in. Slowly rise onto the balls of the feet, lift the crown, pause and balance.",
+   "zh": "吸气。两脚跟缓缓提起，头向上顶，动作略停，保持平衡。"
+  },
+  "m8-s3": {
+   "h": "f254d460c101",
+   "dur": 4.73,
+   "en": "Breathe out. Drop the heels with a light jolt into the floor and let the whole body relax.",
+   "zh": "呼气。两脚跟下落，轻震地面，全身放松。"
+  },
+  "m8-s4": {
+   "h": "2b72c7d3ab6f",
+   "dur": 4.3,
+   "en": "Breathe in. Rise and drop again, continuing with an even rhythm.",
+   "zh": "吸气。再次提踵颠足，连续进行，节奏均匀。"
+  }
+ }
+}
