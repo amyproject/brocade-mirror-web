@@ -92,7 +92,7 @@ JOURNEY = {
 #   apple           Sign in with Apple Services ID + redirect URI registered for the same domain
 #   firebase        Firebase web config with Phone auth enabled (SMS code + invisible reCAPTCHA)
 #   googleIOSClientId  OAuth client ID of type iOS (the iPhone app signs in through the system web sheet)
-AUTH = {"googleClientId": "", "googleIOSClientId": "", "apple": {"clientId": "", "redirectURI": ""}, "firebase": None}
+AUTH = {"googleClientId": "344045409884-kd3as4a4nir8gcsth4rimqok4utrotu3.apps.googleusercontent.com", "googleIOSClientId": "", "apple": {"clientId": "", "redirectURI": ""}, "firebase": None}
 
 # PostHog product analytics (js/analytics.js). Project API key of "Default project" (US Cloud, id 723614):
 # a public write-only key, safe in a web page. Never put a personal key (phx_…) here.
