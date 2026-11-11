@@ -16,8 +16,8 @@
       "googleClientId": "344045409884-kd3as4a4nir8gcsth4rimqok4utrotu3.apps.googleusercontent.com",
       "googleIOSClientId": "",
       "apple": {
-        "clientId": "",
-        "redirectURI": ""
+        "clientId": "com.amyli.baduanjin.web",
+        "redirectURI": "https://brocade-mirror-web.vercel.app/web/baduanjin-v2.html"
       },
       "firebase": null
     },
