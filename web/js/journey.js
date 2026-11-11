@@ -346,8 +346,8 @@
         note.innerHTML = '';
         note.appendChild(h('b', { text: t(name + ' 登录还没接通', name + ' sign-in isn’t connected yet') }));
         note.appendChild(h('span', { text: zh()
-          ? need + '，并且页面要从 https 网址打开' + (secure ? '' : '（现在是本地文件）') + '。你可以先在本机继续，计划和进度都保存在这台设备上。'
-          : need + ', and the page has to be opened from an https address' + (secure ? '' : ' (this is a local file)') + '. You can continue now; your plan and progress are saved on this device.' }));
+          ? need + (secure ? '' : '，并且页面要从 https 网址打开（现在是本地文件）') + '。你可以先在本机继续，计划和进度都保存在这台设备上。'
+          : need + (secure ? '' : ', and the page has to be opened from an https address (this is a local file)') + '. You can continue now; your plan and progress are saved on this device.' }));
         note.appendChild(h('button', { class: 'onb-btn ghost', text: t('在本机继续', 'Continue on this device'), onclick: function () {
           if (!(J.profile && J.profile.verified)) setProfile({ provider: 'local', id: anonId(), verified: false, via: m, phone: m === 'phone' ? box.dataset.phone : undefined });
           go(1);
